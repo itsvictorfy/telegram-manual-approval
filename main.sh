@@ -153,11 +153,11 @@ getUpdates() {
   local REJECT=$(echo $DATA | grep -o "r:$SESSION_ID")
 
   if [ -z "$APPROVE" ] && [ -z "$REJECT" ]; then
-    echo 0
+    echo "0|$USERNAME"
   elif [ -n "$APPROVE" ]; then
-    echo 1
+    echo "1|$USERNAME"
   elif [ -n "$REJECT" ]; then
-    echo 2
+    echo "2|$USERNAME"
   fi
 }
 
@@ -179,8 +179,9 @@ sendMessage
 # Wainting for approve or reject
 UPDATE_REQUESTS_COUNTER=0
 while true; do
-  RESULT=$(getUpdates)
+  read RESULT USERNAME <<< $(getUpdates)
   echo "Result: $RESULT"
+  echo "Username: $USERNAME"
 
   if [ $RESULT -eq 1 ]; then
     echo "Approved"
