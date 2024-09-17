@@ -151,6 +151,12 @@ getUpdates() {
   local DATA=$(echo $UPDATES | awk -F '"data":' '{print $2}' | awk -F '}' '{print $1}')
   local APPROVE=$(echo $DATA | grep -o "a:$SESSION_ID")
   local REJECT=$(echo $DATA | grep -o "r:$SESSION_ID")
+  
+  if [ -n "$USERNAME" ]; then
+    echo "Username extracted: $USERNAME"
+  else
+    echo "Username not found in response"
+  fi
 
   if [ -z "$APPROVE" ] && [ -z "$REJECT" ]; then
     echo 0
