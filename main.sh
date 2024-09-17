@@ -145,8 +145,8 @@ getUpdates() {
         "timeout": 0,
         "allowed_updates": ["callback_query"]
     }')
-  echo "Updates received:"
-  echo "$UPDATES"
+  echo "0|Updates received:$UPDATES"
+
   # search for a:$SESSION_ID or r:$SESSION_ID as: "data": "r:xxxxxxxxx"
   USERNAME=$(echo $UPDATES | jq -r '.result[0].callback_query.from.username')
   local DATA=$(echo $UPDATES | awk -F '"data":' '{print $2}' | awk -F '}' '{print $1}')
