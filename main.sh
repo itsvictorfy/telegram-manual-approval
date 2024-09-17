@@ -151,7 +151,10 @@ getUpdates() {
   # cat "$DEBUG_FILE"
 
   # search for a:$SESSION_ID or r:$SESSION_ID as: "data": "r:xxxxxxxxx"
-  USERNAME=$(echo $UPDATES | jq -r '.result[0].callback_query.from.first_name')$(echo $UPDATES | jq -r '.result[0].callback_query.from.last_name')
+  FIRST_NAME=$(echo $UPDATES | jq -r '.result[0].callback_query.from.first_name')
+  LAST_NAME=$(echo $UPDATES | jq -r '.result[0].callback_query.from.last_name')
+  USERNAME="${FIRST_NAME} ${LAST_NAME}"
+
   if [ -z "$USERNAME" ]; then
       USERNAME=$(echo $UPDATES | jq -r '.result[0].callback_query.from.username')
   fi
