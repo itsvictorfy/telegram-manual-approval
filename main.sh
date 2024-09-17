@@ -146,9 +146,9 @@ getUpdates() {
         "allowed_updates": ["callback_query"]
     }')
   
-  local DEBUG_FILE="./telegram_debug.log"
-  echo "$UPDATES" >> "$DEBUG_FILE"
-  cat "$DEBUG_FILE"
+  # local DEBUG_FILE="./telegram_debug.log"
+  # echo "$UPDATES" >> "$DEBUG_FILE"
+  # cat "$DEBUG_FILE"
 
   # search for a:$SESSION_ID or r:$SESSION_ID as: "data": "r:xxxxxxxxx"
   USERNAME=$(echo $UPDATES | jq -r '.result[0].callback_query.from.username')
