@@ -179,7 +179,7 @@ sendMessage
 # Wainting for approve or reject
 UPDATE_REQUESTS_COUNTER=0
 while true; do
-  read RESULT USERNAME <<< $(getUpdates)
+  IFS='|' read -r RESULT USERNAME <<< "$(getUpdates)"
   echo "Result: $RESULT"
   echo "Username: $USERNAME"
 
