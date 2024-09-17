@@ -151,12 +151,6 @@ getUpdates() {
   local DATA=$(echo $UPDATES | awk -F '"data":' '{print $2}' | awk -F '}' '{print $1}')
   local APPROVE=$(echo $DATA | grep -o "a:$SESSION_ID")
   local REJECT=$(echo $DATA | grep -o "r:$SESSION_ID")
-  
-  if [ -n "$USERNAME" ]; then
-    echo "Username extracted: $USERNAME"
-  else
-    echo "Username not found in response"
-  fi
 
   if [ -z "$APPROVE" ] && [ -z "$REJECT" ]; then
     echo 0
@@ -192,12 +186,14 @@ while true; do
     echo "Approved"
     echo "PUBLISH=true" >> $GITHUB_ENV
     NEWTEXT="$APPROVED_TEXT by $USERNAME"
+    echo $NEWTEXT
     updateMessage "$NEWTEXT"
     exit 0
   elif [ $RESULT -eq 2 ]; then
     echo "Rejected"
     echo "PUBLISH=false" >> $GITHUB_ENV
     NEWTEXT="$REJECTED_TEXT by $USERNAME"
+    echo $NEWTEXT
     updateMessage "$NEWTEXT"
     exit 0
   fi
