@@ -148,7 +148,6 @@ getUpdates() {
   
   # search for a:$SESSION_ID or r:$SESSION_ID as: "data": "r:xxxxxxxxx"
   USERNAME=$(echo $UPDATES | jq -r '.result[0].callback_query.from.username')
-  echo "Username: $USERNAME"
   local DATA=$(echo $UPDATES | awk -F '"data":' '{print $2}' | awk -F '}' '{print $1}')
   local APPROVE=$(echo $DATA | grep -o "a:$SESSION_ID")
   local REJECT=$(echo $DATA | grep -o "r:$SESSION_ID")
