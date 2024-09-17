@@ -147,6 +147,7 @@ getUpdates() {
     }')
   
   # search for a:$SESSION_ID or r:$SESSION_ID as: "data": "r:xxxxxxxxx"
+  USERNAME=$(echo $UPDATES | jq -r '.result[0].callback_query.from.username')
   local DATA=$(echo $UPDATES | awk -F '"data":' '{print $2}' | awk -F '}' '{print $1}')
   local APPROVE=$(echo $DATA | grep -o "a:$SESSION_ID")
   local REJECT=$(echo $DATA | grep -o "r:$SESSION_ID")
@@ -183,12 +184,16 @@ while true; do
 
   if [ $RESULT -eq 1 ]; then
     echo "Approved"
-    updateMessage "$APPROVED_TEXT"
+    echo "PUBLISH=true" >> $GITHUB_ENV
+    NEWTEXT="$APPROVED_TEXT by $USERNAME"
+    updateMessage "$NEWTEXT"
     exit 0
   elif [ $RESULT -eq 2 ]; then
     echo "Rejected"
-    updateMessage "$REJECTED_TEXT"
-    exit 1
+    echo "PUBLISH=false" >> $GITHUB_ENV
+    NEWTEXT="$REJECTED_TEXT by $USERNAME"
+    updateMessage "$NEWTEXT"
+    exit 0
   fi
 
   if [ $UPDATE_REQUESTS_COUNTER -gt $UPDATE_REQUESTS ]; then
