@@ -210,9 +210,9 @@ while true; do
   fi
 
   if [ $UPDATE_REQUESTS_COUNTER -gt $UPDATE_REQUESTS ]; then
+    echo "PUBLISH=false" >> $GITHUB_ENV
     echo "Update requests limit reached"
     updateMessage "$TIMEOUT_TEXT"
-    echo "PUBLISH=false" >> $GITHUB_ENV
     exit 0
   fi
   UPDATE_REQUESTS_COUNTER=$((UPDATE_REQUESTS_COUNTER + 1))
