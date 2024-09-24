@@ -199,7 +199,6 @@ while true; do
     NEWTEXT="$APPROVED_TEXT by $USERNAME"
     echo $NEWTEXT
     updateMessage "$NEWTEXT"
-    sleep 5
     exit 0
   elif [ $RESULT -eq 2 ]; then
     echo "Rejected"
@@ -207,7 +206,6 @@ while true; do
     NEWTEXT="$REJECTED_TEXT by $USERNAME"
     echo $NEWTEXT
     updateMessage "$NEWTEXT"
-    sleep 5
     exit 0
   fi
 
@@ -215,7 +213,6 @@ while true; do
     echo "PUBLISH=false" >> $GITHUB_ENV
     echo "Update requests limit reached"
     updateMessage "$TIMEOUT_TEXT"
-    sleep 5
     exit 0
   fi
   UPDATE_REQUESTS_COUNTER=$((UPDATE_REQUESTS_COUNTER + 1))
