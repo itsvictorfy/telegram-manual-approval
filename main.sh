@@ -182,6 +182,14 @@ updateMessage() {
         "text": "'"$text"'"
     }'
 }
+deleteMessage() {
+  curl -s --location --request POST "https://api.telegram.org/bot$TELEGRAM_KEY/deleteMessage" \
+    --header 'Content-Type: application/json' \
+    --data '{
+        "chat_id": "'"$TELEGRAM_CHAT_ID"'",
+        "message_id": "'"$MESSAGE_ID"'"
+    }'
+}
 
 # Send message
 sendMessage
@@ -212,7 +220,7 @@ while true; do
   if [ $UPDATE_REQUESTS_COUNTER -gt $UPDATE_REQUESTS ]; then
     echo "PUBLISH=false" >> $GITHUB_ENV
     echo "Update requests limit reached"
-    updateMessage "$TIMEOUT_TEXT"
+    deleteMessage
     exit 0
   fi
   UPDATE_REQUESTS_COUNTER=$((UPDATE_REQUESTS_COUNTER + 1))
