@@ -214,14 +214,14 @@ while true; do
     NEWTEXT="$REJECTED_TEXT by $USERNAME"
     echo $NEWTEXT
     updateMessage "$NEWTEXT"
-    exit 0
+    exit 1
   fi
 
   if [ $UPDATE_REQUESTS_COUNTER -gt $UPDATE_REQUESTS ]; then
     echo "PUBLISH=false" >> $GITHUB_ENV
     echo "Update requests limit reached"
     deleteMessage
-    exit 0
+    exit 1
   fi
   UPDATE_REQUESTS_COUNTER=$((UPDATE_REQUESTS_COUNTER + 1))
   echo "Waiting for approve or reject $UPDATE_REQUESTS_COUNTER/$UPDATE_REQUESTS"
