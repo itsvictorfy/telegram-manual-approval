@@ -38,8 +38,13 @@ inputs:
     description: 'Text of timeout'
     required: false
     default: 'Timeout!'
+outputs:
+  publish:
+    description: 'Approval status (true/false)'
+    value: ${{ steps.run.outputs.publish }}
 runs:
   using: "composite"
   steps:
-    - run: $GITHUB_ACTION_PATH/main.sh --TELEGRAM_KEY ${{ inputs.TELEGRAM_KEY }} --TELEGRAM_CHAT_ID ${{ inputs.TELEGRAM_CHAT_ID }} --UPDATE_REQUESTS ${{ inputs.UPDATE_REQUESTS }} --APPROVAL_TEXT "${{ inputs.APPROVAL_TEXT }}" --APPROVAL_BUTTON "${{ inputs.APPROVAL_BUTTON }}" --REJECT_BUTTON "${{ inputs.REJECT_BUTTON }}" --APPROVED_TEXT "${{ inputs.APPROVED_TEXT }}" --REJECTED_TEXT "${{ inputs.REJECTED_TEXT }}" --TIMEOUT_TEXT "${{ inputs.TIMEOUT_TEXT }}"
+    - id: run
+      run: $GITHUB_ACTION_PATH/main.sh --TELEGRAM_KEY ${{ inputs.TELEGRAM_KEY }} --TELEGRAM_CHAT_ID ${{ inputs.TELEGRAM_CHAT_ID }} --UPDATE_REQUESTS ${{ inputs.UPDATE_REQUESTS }} --APPROVAL_TEXT "${{ inputs.APPROVAL_TEXT }}" --APPROVAL_BUTTON "${{ inputs.APPROVAL_BUTTON }}" --REJECT_BUTTON "${{ inputs.REJECT_BUTTON }}" --APPROVED_TEXT "${{ inputs.APPROVED_TEXT }}" --REJECTED_TEXT "${{ inputs.REJECTED_TEXT }}" --TIMEOUT_TEXT "${{ inputs.TIMEOUT_TEXT }}"
       shell: bash

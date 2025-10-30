@@ -204,6 +204,7 @@ while true; do
   if [ $RESULT -eq 1 ]; then
     echo "Approved"
     echo "PUBLISH=true" >> $GITHUB_ENV
+    echo "publish=true" >> $GITHUB_OUTPUT
     NEWTEXT="$APPROVED_TEXT by $USERNAME"
     echo $NEWTEXT
     updateMessage "$NEWTEXT"
@@ -211,6 +212,7 @@ while true; do
   elif [ $RESULT -eq 2 ]; then
     echo "Rejected"
     echo "PUBLISH=false" >> $GITHUB_ENV
+    echo "publish=false" >> $GITHUB_OUTPUT
     NEWTEXT="$REJECTED_TEXT by $USERNAME"
     echo $NEWTEXT
     updateMessage "$NEWTEXT"
@@ -219,6 +221,7 @@ while true; do
 
   if [ $UPDATE_REQUESTS_COUNTER -gt $UPDATE_REQUESTS ]; then
     echo "PUBLISH=false" >> $GITHUB_ENV
+    echo "publish=false" >> $GITHUB_OUTPUT
     echo "Update requests limit reached"
     deleteMessage
     exit 0
